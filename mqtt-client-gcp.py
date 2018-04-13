@@ -9,6 +9,7 @@
 
 import ssl
 import time
+import datetime
 from random import uniform, randint, random
 
 import jwt
@@ -28,8 +29,8 @@ registry_id = 'raspi'
 device_id = 'raspberrypi'
 cloud_region = 'us-central1'
 algorithm = 'RS256'
-ca_certs = 'cert_and_keys/roots.pem'
-private_key_file = 'cert_and_keys/rsa_private.pem'
+ca_certs = '/home/meninoluan/Documents/google iot core/cert_and_keys/roots.pem'
+private_key_file = '/home/meninoluan/Documents/google iot core/cert_and_keys/rsa_private.pem'
 mqtt_bridge_hostname = 'mqtt.googleapis.com'
 mqtt_bridge_port = 8883
 
