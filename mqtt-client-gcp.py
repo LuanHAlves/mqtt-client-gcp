@@ -113,9 +113,15 @@ def get_client(project_id, cloud_region, registry_id, device_id, private_key_fil
     return client
 # [END iot_mqtt_config]
 
-def timestamp():
-    str_time = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
+
+def Time():
+    str_time = datetime.datetime.today().strftime('%H:%M:%S')
     return str_time
+
+
+def timestamp():
+    str_timestamp = datetime.datetime.today().strftime('%Y-%m-%d')
+    return str_timestamp
 
 
 # [START iot_mqtt_run]
@@ -134,7 +140,7 @@ def main():
     for i in range(0, num_messages): # While True
         
         client.loop()
-   
+        
         # Wait if backoff is required.
         if should_backoff:
             # If backoff time is too large, give up.
@@ -143,7 +149,7 @@ def main():
                 break
 
             # Otherwise, wait and connect again.
-            delay = minimum_backoff_time + random.randint(0, 1000) / 1000.0
+            delay = minimum_backoff_time + random.randint(0, 1000)/1000.0
             print('Waiting for {} before reconnecting.'.format(delay))
             time.sleep(delay)
             minimum_backoff_time *= 2
@@ -153,43 +159,40 @@ def main():
             # DADOS SIMULADOS PARA OS TESTES
             sensorValues = {
                             "state": "true",
-                            "gateway": 2,
+                            "gateway": randint(1, 2),
                             "node": randint(1, 10),
                             "timestamp": timestamp(),
+                            "time": Time(),
                             "QY": round(uniform(0.6, 0.7), 4),
                             "temperature": round(uniform(17.0, 18.0), 1),
-                            "latitude": (-19.883971),
-                            "longitude": (-44.415545)
+                            "location": str(-19.883971) +"," + str(-44.415545)
                            }
                            
             state = sensorValues["state"]
             gateway = sensorValues["gateway"]
             node = sensorValues["node"]
             date = sensorValues["timestamp"]
+            hour = sensorValues["time"]
             qy = sensorValues["QY"]
             temperature = sensorValues["temperature"]
-            latitude = sensorValues["latitude"]
-            longitude = sensorValues["longitude"]
+            location = sensorValues["location"]
 
             DATA = {
-                    "gateway": gateway,
-                    "node": node,
+                    "gateway_id": gateway,
+                    "node_id": node,
                     "state": state,
                     "timestamp": date,
+                    "time": hour,
                     "QY": qy,
                     "temperature": temperature,
-                    "latitude": latitude,
-                    "longitude": longitude
+                    "location": location
             }
             payload = json.dumps(DATA)
-            
-            print('\n*****************************************************************\n')
 
-            print('Mensagem Publicada {}/{}:\n{}\''.format(1+i, num_messages, payload))
+            print('\nMensagem Publicada {}/{}:\n{}\''.format(1+i, num_messages, payload))
 
             client.publish(mqtt_topic, payload, qos=1)
-            
-            print('\n*****************************************************************\n')
+        
 
             time.sleep(3)
 
