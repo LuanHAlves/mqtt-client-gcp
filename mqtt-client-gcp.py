@@ -120,7 +120,7 @@ def Time():
 
 
 def timestamp():
-    str_timestamp = datetime.datetime.today().strftime('%Y-%m-%d')
+    str_timestamp = datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S')
     return str_timestamp
 
 
@@ -181,8 +181,7 @@ def main():
                     "gateway_id": gateway,
                     "node_id": node,
                     "state": state,
-                    "timestamp": date,
-                    "time": hour,
+                    "datetime": date,
                     "QY": qy,
                     "temperature": temperature,
                     "location": location
