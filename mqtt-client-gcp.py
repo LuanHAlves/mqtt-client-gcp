@@ -163,7 +163,7 @@ def main():
                             "node": randint(1, 10),
                             "timestamp": timestamp(),
                             "time": Time(),
-                            "QY": round(uniform(0.6, 0.7), 4),
+                            "QY": round(uniform(0.6, 0.78), 4),
                             "temperature": round(uniform(17.0, 18.0), 1),
                             "location": str(-19.883971) +"," + str(-44.415545)
                            }
