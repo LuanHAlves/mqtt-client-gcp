@@ -135,7 +135,7 @@ def main():
 
     mqtt_topic = ('/devices/{}/events'.format(device_id))
 
-    num_messages = 10
+    num_messages = 5
 
     for i in range(0, num_messages): # While True
         
