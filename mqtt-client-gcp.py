@@ -19,9 +19,7 @@ import paho.mqtt.client as mqtt
 
 
 minimum_backoff_time = 1
-
 MAXIMUM_BACKOFF_TIME = 32
-
 should_backoff = False
 
 project_id = 'raspberry-197017'
@@ -128,6 +126,8 @@ def timestamp():
 def main():
     global minimum_backoff_time
 
+    num_messages = int(input("num_messages: "))
+    
     client = get_client(project_id, cloud_region, project_id, device_id, private_key_file,
                             algorithm, ca_certs, mqtt_bridge_hostname, mqtt_bridge_port)
 
@@ -135,8 +135,7 @@ def main():
 
     mqtt_topic = ('/devices/{}/events'.format(device_id))
 
-    num_messages = 5
-
+    
     for i in range(0, num_messages): # While True
         
         client.loop()
