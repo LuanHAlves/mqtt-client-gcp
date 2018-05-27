@@ -3,7 +3,7 @@
 # Autor: Google Inc
 # Data: 2018/03/08
 # Modificado por: Luan H Alves
-# Versao 1.1
+# Versao 1.2
 # ************************************************************************************
 
 
@@ -16,21 +16,21 @@ import jwt
 import json
 import paho.mqtt.client as mqtt
 
-
+credentials = json.loads(open("credentials.json").read())
 
 minimum_backoff_time = 1
 MAXIMUM_BACKOFF_TIME = 32
 should_backoff = False
 
-project_id = 'raspberry-197017'
-registry_id = 'raspi'
-device_id = 'raspberrypi'
-cloud_region = 'us-central1'
-algorithm = 'RS256'
-ca_certs = '/home/meninoluan/Documents/google iot core/cert_and_keys/roots.pem'
-private_key_file = '/home/meninoluan/Documents/google iot core/cert_and_keys/rsa_private.pem'
-mqtt_bridge_hostname = 'mqtt.googleapis.com'
-mqtt_bridge_port = 8883
+project_id = credentials["project_id"]
+registry_id = credentials["registry_id"]
+device_id = credentials["device_id"]
+cloud_region = credentials["cloud_region"]
+algorithm = credentials["algorithm"]
+ca_certs = credentials["ca_certs"]
+private_key_file = credentials["private_key_file"]
+mqtt_bridge_hostname = credentials["mqtt_bridge_hostname"]
+mqtt_bridge_port = credentials["mqtt_bridge_port"]
 
 
 # [START iot_mqtt_jwt]
@@ -81,6 +81,7 @@ def on_message(unused_client, unused_userdata, message):
     payload = str(message.payload)
     print('Received message \'{}\' on topic \'{}\' with Qos {}'.format(
             payload, message.topic, str(message.qos)))
+
 
 def on_log(client, userdata, level, msg):
     print(msg)
@@ -187,12 +188,11 @@ def main():
             }
             payload = json.dumps(DATA)
 
-            print('\nMensagem Publicada {}/{}:\n{}\''.format(1+i, num_messages, payload))
+            print('\nMsg Publicada {}/{}:\n{}\''.format(1+i, num_messages, payload))
 
             client.publish(mqtt_topic, payload, qos=1)
         
-
-            time.sleep(3)
+            time.sleep(2)
 
         except Exception as e:
             client.disconnect()
