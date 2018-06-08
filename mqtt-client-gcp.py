@@ -127,7 +127,7 @@ def timestamp():
 def main():
     global minimum_backoff_time
 
-    num_messages = int(input("num_messages: "))
+    num_messages = int(input("Número de mensagens: "))
     
     client = get_client(project_id, cloud_region, project_id, device_id, private_key_file,
                             algorithm, ca_certs, mqtt_bridge_hostname, mqtt_bridge_port)
